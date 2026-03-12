@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pizzería Don Carlos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+
+<body>
+
+    <div id="loader">
+    
+        <div class="loader-content">
+    
+            <img src="img/Logo Pizza.jpg" class="logo">
+    
+            <h2>Pizzería Don Carlos</h2>
+    
+        </div>
+    
+    </div>
+
+<section class="hero">
+
+    <div class="hero-texto">
+        <h1>Pizzería Don Carlos</h1>
+        <p>Las mejores pizzas artesanales 🍕</p>
+
+        <a href="#menu" class="btn-menu">Ver Menú</a>
+    </div>
+
+</section>
+
+<main id="menu">
+
+    <h2>Nuestras Pizzas</h2>
+
+    <div class="menu">
+
+        <div class="pizza-card" onclick="mostrarPizza('pepperoni')">
+            <img src="img/Pizza pepperoni.jpeg" alt="Pepperoni">
+            <h3>Pizza Pepperoni</h3>
+        </div>
+
+        <div class="pizza-card" onclick="mostrarPizza('hawaiana')">
+            <img src="img/Pizza Hawaina.jpeg" alt="Hawaiana">
+            <h3>Pizza Hawaiana</h3>
+        </div>
+
+        <div class="pizza-card" onclick="mostrarPizza('margarita')">
+            <img src="img/Pizza Margarita.jpeg" alt="Margarita">
+            <h3>Pizza Margarita</h3>
+        </div>
+
+        <div class="pizza-card" onclick="mostrarPizza('polloChampi')">
+            <img src="img/Pizza Pollo con champiñon.jpeg">
+            <h3>Pizza Pollo con champiñon</h3>
+        </div>
+
+        <div class="pizza-card" onclick="mostrarPizza('polloBBQ')">
+            <img src="img/Pizza de pollo salsa BBQ.jpg">
+            <h3>Pizza Cuatro Quesos</h3>
+        </div>
+
+        <div class="pizza-card" onclick="mostrarPizza('vegetariana')">
+            <img src="img/Pizzavegetariana.jpg">
+            <h3>Pizza Vegetariana</h3>
+        </div>
+
+    </div>
+
+</main>
+
+<!-- Ventana de detalle -->
+<div id="detallePizza" class="detalle oculto">
+
+    <div class="contenido">
+
+        <span class="cerrar" onclick="cerrarDetalle()">X</span>
+
+        <h2 id="tituloPizza"></h2>
+
+        <img id="imagenPizza">
+
+        <p id="descripcionPizza"></p>
+
+        <div id="precioPizza"></div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
