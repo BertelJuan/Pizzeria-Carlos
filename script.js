@@ -126,6 +126,7 @@ function comprarPizza(){
     }
 
     carrito.push(pedido)
+    animarPizzaAlCarrito()
     actualizarContador()
 
     mostrarToast("🍕 Pizza agregada al carrito")
@@ -186,6 +187,20 @@ function abrirCarrito(){
 
 function hacerPedido(){
 
+    const fecha = new Date()
+
+    const fechaFormateada =
+    fecha.toLocaleDateString() + " " +
+    fecha.toLocaleTimeString()
+
+    document.getElementById("fechaPedido").innerText =
+    "Fecha: " + fechaFormateada
+
+    const numeroPedido = Math.floor(Math.random()*100000)
+
+    document.getElementById("numeroPedido").innerText =
+    "Pedido #" + numeroPedido
+
     if(carrito.length === 0){
 
         mostrarToast("Tu carrito está vacío")
@@ -243,6 +258,39 @@ function cerrarCarrito(){
 function cerrarRecibo(){
 
     document.getElementById("modalRecibo").classList.add("oculto")
+
+}
+
+function animarPizzaAlCarrito(){
+
+    const imgPizza = document.getElementById("imagenPizza")
+    const carritoIcono = document.querySelector(".carrito-icono")
+
+    const rectPizza = imgPizza.getBoundingClientRect()
+    const rectCarrito = carritoIcono.getBoundingClientRect()
+
+    const pizzaVoladora = imgPizza.cloneNode()
+
+    pizzaVoladora.classList.add("pizza-voladora")
+
+    pizzaVoladora.style.left = rectPizza.left + "px"
+    pizzaVoladora.style.top = rectPizza.top + "px"
+
+    document.body.appendChild(pizzaVoladora)
+
+    setTimeout(()=>{
+
+        pizzaVoladora.style.left = rectCarrito.left + "px"
+        pizzaVoladora.style.top = rectCarrito.top + "px"
+        pizzaVoladora.style.width = "20px"
+        pizzaVoladora.style.height = "20px"
+        pizzaVoladora.style.opacity = "0.5"
+
+    },50)
+
+    setTimeout(()=>{
+        pizzaVoladora.remove()
+    },900)
 
 }
 
