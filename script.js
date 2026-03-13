@@ -1,3 +1,6 @@
+let pizzaActual = null
+let carrito = []
+
 const pizzas = {
 
     pepperoni:{
@@ -37,7 +40,7 @@ const pizzas = {
     },
 
     polloChampi:{
-        titulo:"polloChampi",
+        titulo:"Pizza Pollo con Champiñones",
         imagen:"img/Pizza Pollo con champiñon.jpeg",
         descripcion:"Pollo, salsa BBQ y queso mozzarella.",
         precios:{
@@ -47,7 +50,7 @@ const pizzas = {
         }
     },
 
-    polloBBQ:{
+    cuatroQuesos:{
         titulo:"Pizza Cuatro Quesos",
         imagen:"img/Pizza de pollo salsa BBQ.jpg",
         descripcion:"Mozzarella, parmesano, cheddar y queso azul.",
@@ -75,6 +78,8 @@ function mostrarPizza(tipo){
 
     const pizza = pizzas[tipo]
 
+    pizzaActual = pizza
+
     document.getElementById("tituloPizza").innerText = pizza.titulo
     document.getElementById("imagenPizza").src = pizza.imagen
     document.getElementById("descripcionPizza").innerText = pizza.descripcion
@@ -98,6 +103,37 @@ function mostrarPizza(tipo){
     document.getElementById("detallePizza").classList.remove("oculto")
 }
 
+function comprarPizza(){
+
+    const tamanos = document.getElementsByName("tamano")
+
+    let tamanoSeleccionado = ""
+
+    if(tamanos[0].checked){
+        tamanoSeleccionado = "Pequeña"
+    }
+    else if(tamanos[1].checked){
+        tamanoSeleccionado = "Mediana"
+    }
+    else{
+        tamanoSeleccionado = "Familiar"
+    }
+
+    const pedido = {
+        pizza:pizzaActual.titulo,
+        tamano:tamanoSeleccionado,
+        precio:pizzaActual.precios
+    }
+
+    carrito.push(pedido)
+    actualizarContador()
+
+    mostrarToast("🍕 Pizza agregada al carrito")
+    console.log(carrito)
+
+    cerrarDetalle()
+}
+
 function cerrarDetalle(){
     document.getElementById("detallePizza").classList.add("oculto")
 }
@@ -115,6 +151,98 @@ function animarPizzas(){
         }, index * 300)
 
     })
+
+}
+
+function mostrarToast(mensaje){
+
+    const toast = document.getElementById("toast")
+
+    toast.innerText = mensaje
+    toast.classList.remove("oculto")
+
+    setTimeout(()=>{
+
+        toast.classList.add("oculto")
+
+    },3000)
+
+}
+
+function actualizarContador(){
+    document.getElementById("contadorCarrito").innerText = carrito.length
+}
+
+function abrirCarrito(){
+    const lista = document.getElementById("listaCarrito")
+    
+    lista.innerHTML = ""
+    
+    carrito.forEach((item)=>{
+        lista.innerHTML += `<div class="item-carrito">🍕 ${item.pizza} - ${item.tamano}</div>`
+    })
+    document.getElementById("modalCarrito").classList.remove("oculto")
+}
+
+function hacerPedido(){
+
+    if(carrito.length === 0){
+
+        mostrarToast("Tu carrito está vacío")
+        return
+    }
+
+    const contenedor = document.getElementById("detalleRecibo")
+
+    contenedor.innerHTML = ""
+
+    let total = 0
+
+    carrito.forEach(item => {
+
+        let precio = 0
+
+        if(item.tamano === "Pequeña"){
+            precio = item.precio.pequena
+        }
+        else if(item.tamano === "Mediana"){
+            precio = item.precio.mediana
+        }
+        else{
+            precio = item.precio.familiar
+        }
+
+        total += parseInt(precio.replace(/\D/g,''))
+
+        contenedor.innerHTML += `
+        <div class="item-recibo">
+        <span>${item.pizza} (${item.tamano})</span>
+        <span>${precio}</span>
+        </div>
+        `
+
+    })
+
+    document.getElementById("totalRecibo").innerText =
+    "Total: $" + total.toLocaleString()
+
+    document.getElementById("modalRecibo").classList.remove("oculto")
+
+    carrito = []
+
+    actualizarContador()
+
+    cerrarCarrito()
+
+}
+
+function cerrarCarrito(){
+    document.getElementById("modalCarrito").classList.add("oculto")
+}
+
+function cerrarRecibo(){
+
+    document.getElementById("modalRecibo").classList.add("oculto")
 
 }
 
